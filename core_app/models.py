@@ -9,13 +9,13 @@ class UserManager(BaseUserManager):
     def create_user(self, username, email=None, password=None, **extrafields):
         if not username:
             raise ValueError('Users must have a username')
-        user = self.models(username=username, email=self.normalize_email(email), **extrafields)
+        user = self.model(username=username, email=self.normalize_email(email), **extrafields)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, username, email=None, password=None):
+    def create_superuser(self, username, password, email=None ):
         user = self.create_user(username, email, password)
         user.is_staff = True
         user.is_superuser = True
