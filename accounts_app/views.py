@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from core_app.models import User
@@ -55,6 +57,7 @@ def register(request):
                             [email],
                             fail_silently=False
                         )
+                        messages.info(request, ': A confirmation code has been sent to your registered email address, check and confirm your registration')
 
                         request.method = 'GET'
                         return render(request, 'accounts_app/confirmregister.html', context)
