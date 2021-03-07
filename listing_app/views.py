@@ -92,10 +92,10 @@ def update(request, pk):
 
     else:
         return render(request, 'listing_app/create.html', context)
-#
-# @login_required
-# def delete_listing(request, pk):
-#     listing = get_object_or_404(Listing, pk=pk, owner=request.user)
-#     if request.method=="POST":
-#         listing.delete()
-#         return redirect('dashboard')
+
+@login_required
+def delete_listing(request, pk):
+    listing = get_object_or_404(Listing, pk=pk, owner=request.user)
+    if request.method=="POST":
+        listing.delete()
+        return redirect('dashboard')
