@@ -5,6 +5,7 @@ from core_app.models import User
 from listing_app.models import Listing
 from django.core.mail import send_mail
 from django.contrib import messages
+from inquiry_app.models import inquiry
 import random
 import string
 
@@ -139,3 +140,18 @@ def dashboard(request):
         'listings': mylistings
     }
     return render(request, 'accounts_app/dashboard.html', context)
+
+@login_required
+def myinquiries(request):
+    myinquiry = inquiry.objects.all().filter(user_id=request.user.id)
+    context = {
+        'myinquiries': myinquiry
+    }
+    return render(request, 'accounts_app/dashboard_myinquiries.html', context)
+@login_required
+def inquiry1(request):
+    myinquiry = inquiry.objects.all().filter(owner_id=request.user.id)
+    context = {
+        'inquiries': myinquiry
+    }
+    return render(request, 'accounts_app/dashboard_inquiries.html', context)

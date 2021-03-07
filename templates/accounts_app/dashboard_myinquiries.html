@@ -33,35 +33,30 @@
         <div class="col-md-12">
           <h2>Welcome {{request.user.first_name}} {{request.user.last_name}}</h2>
           {% include 'partials/_dashnav.html' %}
-          <p>Here are your Inquiries</p>
+          <p>Here are your listings and Inquiries</p>
             <hr>
-            {% if listings %}
+            {% if myinquiries %}
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Category</th>
                 <th scope="col">Title</th>
-                <th scope="col">View Here</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {% for listing in listings %}
+              {% for inquiry in myinquiries %}
               <tr>
-                <td>{{listing.category}}</td>
-                <td>{{listing.title}}</td>
+                <td>{{inquiry.listing}}</td>
                 <td>
-                  <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
-                  <a class="btn btn-warning" href="#">Update</a>
-                  <a class="btn btn-danger" href="#">Delete</a>
+                  <a class="btn btn-light" href="{% url 'listing' inquiry.listing_id %}">View Listing</a>
                 </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
           {%else%}
-          <p>You have not created any listings </p>
-          <button class='btn btn-primary'>Create a New Lisitng</button>
+          <p>You have not made any inquiries yet </p>
+          <a class='btn btn-primary' href="{% url 'listing' %}" >View Listings</a>
           {%endif%}
         </div>
       </div>
