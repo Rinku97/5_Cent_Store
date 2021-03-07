@@ -1,13 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Listing
 from django.core.paginator import Paginator, EmptyPage
 from .choices import price_choices, state_choices, category_choices
+from .forms import ListingForm, UpdateForm
+
 
 # Create your views here.
 
 def listings(request):
     listings = Listing.objects.order_by('-list_date').filter(is_published=True)
-    paginator = Paginator(listings, 9)    # to control how pagination works
+    paginator = Paginator(listings, 9)  # to control how pagination works
     page = request.GET.get('page')
     page_listings = paginator.get_page(page)
     context = {
@@ -54,3 +57,45 @@ def search(request):
         'values': request.GET,
     }
     return render(request, 'listing_app/search.html', context)
+
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = ListingForm(request.POST, request.FILES)
+        if form.is_valid():
+            new = form.save(commit=False)
+            new.owner = request.user
+            new.save()
+            return redirect('dashboard')
+        else:
+            pass
+    else:
+        return render(request, 'listing_app/create.html', {'form': ListingForm()})
+
+
+@login_required
+def update(request, pk):
+    listing = get_object_or_404(Listing, pk=pk, owner=request.user)
+    context = {
+        'form': UpdateForm(instance=listing),
+        'update': True,
+        'pk': pk
+    }
+    if request.method == "POST":
+        form = UpdateForm(request.POST, request.FILES, instance=listing)
+        print(form)
+        print(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+
+    else:
+        return render(request, 'listing_app/create.html', context)
+#
+# @login_required
+# def delete_listing(request, pk):
+#     listing = get_object_or_404(Listing, pk=pk, owner=request.user)
+#     if request.method=="POST":
+#         listing.delete()
+#         return redirect('dashboard')

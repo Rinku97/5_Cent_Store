@@ -52,7 +52,7 @@
                 <td>{{listing.title}}</td>
                 <td>
                   <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
-                  <a class="btn btn-warning" href="#">Update</a>
+                  <a class="btn btn-warning" href="{% url 'update' listing.id %}">Update</a>
                   <a class="btn btn-danger" href="#">Delete</a>
                 </td>
               </tr>

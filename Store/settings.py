@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'listing_app',
     'accounts_app',
     'inquiry_app',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = '5centstore.noreply@gmail.com'
 EMAIL_HOST_PASSWORD = 'zwekvrpfjrrgkilx'
 EMAIL_USE_TLS = True
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
