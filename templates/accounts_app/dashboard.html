@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock %}
+{% block content %}
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">{{request.user.first_name}}'s Dashboard</h1>
+          <p class="lead">Manage your 5 Cent Store Listings/Inquiries</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Welcome {{request.user.first_name}} {{request.user.last_name}}</h2>
+          <p>Here are your listings and Inquiries</p>
+            <hr>
+            {% if listings %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Title</th>
+                <th scope="col">View Here</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for listing in listings %}
+              <tr>
+                <td>{{listing.category}}</td>
+                <td>{{listing.title}}</td>
+                <td>
+                  <a class="btn btn-light" href="{% url 'listing' listing.id %}">View Listing</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {%else%}
+          <p>You have not created any listings </p>
+          <button class='btn btn-primary'>Create a New Lisitng</button>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

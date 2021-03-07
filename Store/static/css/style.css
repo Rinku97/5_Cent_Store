@@ -14,7 +14,7 @@ img {
 .social a {
   margin-right: 0.4rem; }
 .selunder{
-  border-bottom: 3px solid red;
+  border-bottom: 3px solid white;
 }
 #showcase {
   background: url(../img/showcase.jpg) no-repeat top center fixed;

@@ -1,8 +1,8 @@
-import time
-
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from core_app.models import User
+from listing_app.models import Listing
 from django.core.mail import send_mail
 from django.contrib import messages
 import random
@@ -57,7 +57,8 @@ def register(request):
                             [email],
                             fail_silently=False
                         )
-                        messages.info(request, ': A confirmation code has been sent to your registered email address, check and confirm your registration')
+                        messages.info(request,
+                                      ': A confirmation code has been sent to your registered email address, check and confirm your registration')
 
                         request.method = 'GET'
                         return render(request, 'accounts_app/confirmregister.html', context)
@@ -107,3 +108,34 @@ def confirmregister(request):
         return redirect('register')
 
 
+def userlogin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, ': You are logged in successfully!')
+            return redirect('index')
+        else:
+            messages.error(request, ' Invalid username or password')
+            return redirect('login')
+    else:
+        return render(request, 'accounts_app/login.html')
+
+
+@login_required
+def userlogout(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'You are now logged out')
+        return redirect('index')
+
+
+@login_required
+def dashboard(request):
+    mylistings = Listing.objects.order_by('-list_date').filter(owner=request.user)
+    context = {
+        'listings': mylistings
+    }
+    return render(request, 'accounts_app/dashboard.html', context)

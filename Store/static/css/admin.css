@@ -1,13 +1,13 @@
 #header{
     height: 50px;
-    background: #093463;
+    background: #000000;
     color: #fff;
 }
 #branding h1{
     color: #fff;
 }
 .module h2, .module caption, .inline-group h2{
-    background: #05b348;
+    background: #05b393;
 }
 a:link,
 a:visited{
