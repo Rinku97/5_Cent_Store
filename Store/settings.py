@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pages_app',
     'core_app',
     'listing_app',
+    'accounts_app',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +131,15 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'core_app.User'
 
+from django.contrib.messages import constants as messages
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '5centstore.noreply@gmail.com'
+EMAIL_HOST_PASSWORD = 'zwekvrpfjrrgkilx'
+EMAIL_USE_TLS = True
