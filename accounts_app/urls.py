@@ -9,5 +9,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name="dashboard"),
     path('dashboard/myinquiries', views.myinquiries, name="myinquiries"),
     path('dashboard/inquiry', views.inquiry1, name="inquiry1"),
-    # path('dashboard/send_reply', views.send_reply, name="send_reply"),
+    path('dashboard/send_reply', views.send_reply, name="send_reply"),
 ]

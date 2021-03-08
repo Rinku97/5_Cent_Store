@@ -155,3 +155,22 @@ def inquiry1(request):
         'inquiries': myinquiry
     }
     return render(request, 'accounts_app/dashboard_inquiries.html', context)
+
+
+@login_required
+def send_reply(request):
+    if request.method =="POST":
+        email = request.POST['email']
+        message = request.POST['message']
+        lisiting = request.POST['listing']
+        send_mail(
+            'Reply from ' + lisiting + ' owner',
+            message,
+            '5centstore.noreply@gmail.com',
+            [email],
+            fail_silently=False
+        )
+        messages.success(request, ': Your reply has been sent successfully')
+        return redirect('inquiry1')
+    else:
+        return redirect('dashboard')
