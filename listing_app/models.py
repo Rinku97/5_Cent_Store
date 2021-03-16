@@ -14,7 +14,7 @@ class Listing(models.Model):
     zipcode = models.CharField(max_length=20)
     description = models.TextField(blank=True)
     price = models.IntegerField()
-    photo_main = models.ImageField(upload_to='photos/%Y/%m/%d/')   # photos/%Y/%m/%d/ -> (means photos/Year/Month/Date)
+    photo_main = models.ImageField(upload_to='photos/%Y/%m/%d/')  # photos/%Y/%m/%d/ -> (means photos/Year/Month/Date)
     photo_1 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_2 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_3 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
